@@ -1,40 +1,48 @@
 Bday gift:
 
-Did u forget ur friends bday??? DONT WORRY WHEN MABU IS HERE
- I made a customizable gift card that u can download as a PDF and send to ur friend. U can add  pics and write a sweet message for ur friend
+Did u forget ur friends bday or ur anniversary??? DONT WORRY WHEN MABU IS HERE
+ I made a customizable gift card that u can download as a PDF and send to ur friend or ur loved one . U can add  pics and write a sweet message for ur friend
 
 
- <img width="1917" height="937" alt="image" src="https://github.com/user-attachments/assets/b163bd82-ca9b-48a2-9ead-f12d94645432" />
+<img width="522" height="356" alt="image" src="https://github.com/user-attachments/assets/b0fcc5e6-97d3-438e-bccb-959c5474e18c" />
 
 
 
-U want to test this out; the password is bestfriend  (dont tell anyone)
+U want to test this out; the password is bestfriend for the bday card and for the other occasion its I LOVE U (DONT TELL ANYONE LETS KEEP THIS A SECRET)
+
+After enetering the password, u will be able to see a sample and can click the top button to customise it.
 
 
 
 New features:
 
-U can now add 6 pics and write a custom sweet message, and u can even change the password, but don't forget to give ur freind the hint to the password so he/she will be able to open it
+U can now add 6 pics and write a custom sweet message, and u can even change the password, but don't forget to give ur friend /love one hint to the password so he/she will be able to open it
 
 We tried to make it look better by adding floating petals in the background 
 
 And there is new confetti that blasts when u enter the password. In the end, there is a special surprise ur friend can blow out the candles and make a wish 
 
+Now u can upload a video that plays at the start, and then the card opens so u can make ur freind/loved one more special 
+
+And there is the new timer feature so u can make the gift beforehand and send it to ur freind / Loved one and he/she will be able to open it only after the timer runs out
+
+U can also add a scratch-off card that the person can scratch with their mouse and under there u can write a sweet message for that person or add that person's fav meme
 
 
  This will be a sweet and memorable digital gift, and unlike physical gifts that can break or get lost ur friend can save this in their phone and cherish the good moments
 
 
- Plans: I want to change this card differently so that u can customise everything; you can change it into a card that u can give ur crush to ask her/him out 😉 but u guys need to hold ur horses for that cause that's going to take a bit longer (but it'scoming real soon)
+ Plans: I am thining abt some new features, but i will make those ideas better and add them later
+
+
+AI usage (the imp part): I used AI for the falling petal animation background, blooming flower and was used to make the scratch off; hope u don't mind and i will try to make my own version for the next ship!!
 
 
 
-AI usage (the imp part): I used AI for the falling petal animation background, blooming flower hope u dont minde and i will try to make my own version for the next ship!!
+<img width="361" height="459" alt="image" src="https://github.com/user-attachments/assets/af51b740-6ff2-42df-bf45-59c9fea79d7b" />
 
+<img width="374" height="206" alt="image" src="https://github.com/user-attachments/assets/5aeab715-c9cf-4dad-8c75-9d1f4b60052e" />
 
-<img width="625" height="896" alt="image" src="https://github.com/user-attachments/assets/844dafe7-0968-4977-954b-5fd021bfa5a2" />
-
-<img width="1903" height="924" alt="image" src="https://github.com/user-attachments/assets/0b27b476-12cc-4a89-a407-18e33b93ec9c" />
 
 
 
