@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Little Something For You 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap');
-
 :root{
   --cream: #FFF7F1;
   --plum: #3D1F30;
@@ -16,9 +15,15 @@
   --sage: #8FA787;
   --card: #FFFFFF;
 }
+
+body.theme-birthday { --cream: #FFF7F1; --plum: #3D1F30; --coral: #E8836A; --blush: #F3C9CE; }
+body.theme-anniversary { --cream: #FBF9F6; --plum: #2C2A29; --coral: #C29B38; --blush: #EFE4D0; }
+body.theme-askout { --cream: #FFF0F3; --plum: #4A1525; --coral: #D94F70; --blush: #FFD1DC; }
+body.theme-love { --cream: #FAF0F5; --plum: #3A1B30; --coral: #C75B9B; --blush: #F4D0E5; }
+
 *{ margin:0; padding:0; box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
-body{ font-family:'Outfit', sans-serif; background: var(--cream); color: var(--plum); overflow-x:hidden; min-height:100vh; }
+body{ font-family:'Outfit', sans-serif; background: var(--cream); color: var(--plum); overflow-x:hidden; min-height:100vh; transition: background 0.4s ease, color 0.4s ease; }
 @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; } }
 h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 
@@ -26,26 +31,66 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 .petal{ position:absolute; top:-40px; width:14px; height:14px; background: var(--blush); border-radius: 0 60% 0 60%; opacity:0.75; animation: fall linear infinite; }
 @keyframes fall{ 0%{ transform: translateY(-5vh) translateX(0) rotate(0deg); } 100%{ transform: translateY(105vh) translateX(var(--drift,40px)) rotate(340deg); } }
 
-#lock{ position:relative; z-index:2; min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 24px; }
+.screen { display: none; min-height: 100vh; position: relative; z-index: 2; }
+.screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+.picker-container{ max-width:480px; width:100%; padding: 24px; text-align: center; }
+.picker-card{ background: var(--card); border-radius: 28px; padding: 48px 32px; box-shadow: 0 30px 60px -20px rgba(61,31,48,0.25); }
+.picker-card h1{ font-size: 28px; margin-bottom: 10px; }
+.picker-card p{ color: #7a6470; font-size: 15px; margin-bottom: 24px; }
+.occasion-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.occ-btn{ font-family:'Outfit', sans-serif; padding: 14px; border-radius: 14px; border: 2px solid var(--blush); background: var(--cream); color: var(--plum); font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+.occ-btn:hover, .occ-btn.selected{ border-color: var(--coral); background: var(--coral); color: white; transform: translateY(-2px); }
+#start-card-btn{ width: 100%; font-family:'Outfit', sans-serif; font-weight: 600; font-size: 16px; padding: 16px; border: none; border-radius: 14px; background: var(--plum); color: white; cursor: pointer; transition: filter 0.2s, transform 0.15s; }
+#start-card-btn:hover{ filter: brightness(1.2); transform: translateY(-1px); }
+
+#lock{ display:flex; align-items:center; justify-content:center; padding: 24px; min-height:100vh; }
 .lock-card{ background: var(--card); border-radius: 28px; padding: 56px 40px; max-width: 420px; width:100%; text-align:center; box-shadow: 0 30px 60px -20px rgba(61,31,48,0.25); position:relative; }
 .lock-eyebrow{ font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color: var(--coral); font-weight:600; margin-bottom:14px; }
 .lock-card h1{ font-size: 32px; line-height:1.15; margin-bottom:12px; }
-.lock-card p{ color:#7a6470; font-size:15px; margin-bottom:28px; line-height:1.5; }
+.lock-card p{ color:#7a6470; font-size:15px; margin-bottom:20px; line-height:1.5; }
+
+#countdown-box { display: none; background: var(--cream); border-radius: 12px; padding: 12px; margin-bottom: 20px; font-size: 13px; font-weight: 600; color: var(--plum); }
+#countdown-digits { display: flex; justify-content: center; gap: 10px; margin-top: 6px; font-size: 16px; color: var(--coral); font-family: 'Fraunces', serif; }
+
 #code-input{ width:100%; font-family:'Outfit', sans-serif; font-size:18px; letter-spacing:0.1em; text-align:center; text-transform:uppercase; padding:16px 18px; border-radius:14px; border:2px solid var(--blush); background: var(--cream); color: var(--plum); outline:none; transition: border-color 0.2s, transform 0.15s; }
 #code-input:focus{ border-color: var(--coral); }
 #code-input.shake{ animation: shake 0.4s; border-color:#d94f4f; }
 @keyframes shake{ 20%,60%{ transform: translateX(-8px); } 40%,80%{ transform: translateX(8px); } }
 #unlock-btn{ margin-top:16px; width:100%; font-family:'Outfit', sans-serif; font-weight:600; font-size:16px; padding:16px; border:none; border-radius:14px; background: var(--coral); color: white; cursor:pointer; transition: background 0.2s, transform 0.15s; }
-#unlock-btn:hover{ background:#d96f52; transform: translateY(-1px); }
-#unlock-btn:active{ transform: translateY(0); }
+#unlock-btn:hover{ filter: brightness(1.08); transform: translateY(-1px); }
 #hint{ margin-top:18px; font-size:13px; color:#a68f9c; }
-#lock-error{ margin-top:12px; font-size:13px; color:#d94f4f; min-height:16px; }
+#lock-error{ margin-top:12px; font-size:13px; color:#d94f4f; min-height:16px; font-weight: 500; line-height: 1.4; }
+.back-link{ margin-top: 16px; background: none; border: none; color: #a68f9c; font-size: 13px; text-decoration: underline; cursor: pointer; font-family: 'Outfit', sans-serif; }
 
-#celebration{ display:none; position:relative; z-index:2; }
-#celebration.show{ display:block; animation: fadeIn 0.6s ease; }
+#celebration{ display:none; min-height:100vh; position: relative; width: 100%; }
+#celebration.active{ display:block; animation: fadeIn 0.6s ease; }
 @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
 
-.hero{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 40px 24px; }
+.top-editor-container {
+  position: absolute; top: 36px; left: 50%; transform: translateX(-50%); z-index: 100;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
+}
+.top-nav-row {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center;
+}
+#editor-toggle, .sample-menu-btn {
+  background: var(--plum); color: white; border: none; border-radius: 999px;
+  padding: 13px 22px; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 14px;
+  cursor: pointer; box-shadow: 0 12px 28px -8px rgba(0,0,0,0.35);
+  transition: transform 0.15s, filter 0.2s; white-space: nowrap; text-decoration: none;
+}
+#editor-toggle:hover, .sample-menu-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+.sample-menu-btn { background: var(--coral); }
+
+.editor-sample-text {
+  font-size: 13px; color: var(--plum); font-weight: 600; opacity: 0.9;
+  background: rgba(255, 255, 255, 0.85); padding: 5px 14px; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  backdrop-filter: blur(2px); white-space: nowrap;
+}
+
+.hero{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 85px 24px 40px; }
 #flower-wrap{ width:220px; height:220px; margin-bottom: 12px; }
 .petal-shape{ transform-origin: 100px 100px; transform: scale(0); animation: bloom 0.7s cubic-bezier(.2,1.4,.4,1) forwards; }
 .petal-shape.sway{ animation: bloom 0.7s cubic-bezier(.2,1.4,.4,1) forwards, sway 5s ease-in-out infinite; animation-delay: var(--d), calc(var(--d) + 0.7s); }
@@ -58,7 +103,7 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 .scroll-cue{ margin-top:48px; font-size:13px; color: var(--coral); letter-spacing:0.08em; text-transform:uppercase; opacity:0; animation: riseIn 0.8s ease forwards, bob 2s ease-in-out infinite 2.4s; animation-delay: 1.9s; }
 @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
 
-#collage{ padding: 40px 24px 100px; max-width: 1100px; margin: 0 auto; }
+#collage{ padding: 40px 24px 60px; max-width: 1100px; margin: 0 auto; }
 .collage-heading{ text-align:center; margin-bottom:44px; }
 .collage-heading .eyebrow{ color: var(--coral); font-weight:600; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; }
 .collage-heading h3{ font-size: clamp(26px, 4vw, 38px); }
@@ -70,24 +115,28 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 .photo-box img{ width:100%; height:100%; object-fit:cover; display:block; }
 .polaroid figcaption{ margin-top:12px; font-size:14px; text-align:center; color:#5c4753; line-height:1.4; }
 
+#scratch-section { padding: 20px 24px 60px; max-width: 500px; margin: 0 auto; text-align: center; }
+.scratch-card-box { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 16px 32px -12px rgba(61,31,48,0.25); display: flex; align-items: center; justify-content: center; }
+.scratch-secret { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; font-size: 16px; font-weight: 600; color: var(--plum); background: var(--blush); text-align: center; }
+#scratch-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+
 #closing{ text-align:center; padding: 20px 24px 120px; }
 #closing h3{ font-size: clamp(24px, 4vw, 34px); margin-bottom:14px; }
 #closing p{ color:#7a6470; max-width:460px; margin:0 auto 28px; line-height:1.6; }
-#wish-btn{ font-family:'Outfit', sans-serif; font-weight:600; font-size:15px; padding:16px 30px; border:none; border-radius:999px; background: var(--plum); color:white; cursor:pointer; transition: transform 0.15s, background 0.2s; }
-#wish-btn:hover{ transform: translateY(-2px); background:#4f2740; }
+
+#wish-btn, #yes-btn{ font-family:'Outfit', sans-serif; font-weight:600; font-size:15px; padding:16px 30px; border:none; border-radius:999px; background: var(--plum); color:white; cursor:pointer; transition: transform 0.15s, background 0.2s; }
+#wish-btn:hover, #yes-btn:hover{ transform: translateY(-2px); filter: brightness(1.2); }
 #wish-btn:disabled{ opacity:0.5; cursor:default; transform:none; }
+
+#proposal-box{ display:flex; gap:14px; justify-content:center; align-items:center; margin-top:10px; }
+#yes-btn{ background: var(--coral); }
+#no-btn{ font-family:'Outfit', sans-serif; font-weight:600; font-size:15px; padding:16px 30px; border:none; border-radius:999px; background:#e0d3d8; color: var(--plum); cursor:pointer; transition: transform 0.1s ease; position:relative; }
+
 #signed{ margin-top:40px; font-family:'Fraunces', serif; font-style:italic; color: var(--coral); font-size:18px; }
 
 .confetto{ position:fixed; top:-20px; z-index:50; pointer-events:none; border-radius:2px; animation: confetti-fall linear forwards; }
 @keyframes confetti-fall{ to{ transform: translateY(105vh) rotate(var(--spin, 360deg)); opacity:0.9; } }
 
-#editor-toggle{
-  position:fixed; top:18px; right:18px; z-index:100;
-  background: var(--plum); color:white; border:none; border-radius:999px;
-  padding:12px 18px; font-family:'Outfit',sans-serif; font-weight:600; font-size:13px;
-  cursor:pointer; box-shadow:0 10px 24px -8px rgba(0,0,0,0.35);
-}
-#editor-toggle:hover{ background:#4f2740; }
 #editor-backdrop{
   display:none; position:fixed; inset:0; z-index:200;
   background: rgba(61,31,48,0.55); backdrop-filter: blur(2px);
@@ -102,12 +151,14 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 #editor-panel > p.sub{ color:#7a6470; font-size:14px; margin-bottom:24px; }
 .field-group{ margin-bottom:18px; }
 .field-group label{ display:block; font-size:13px; font-weight:600; color:var(--plum); margin-bottom:6px; }
-.field-group input[type=text], .field-group textarea{
+.field-group input[type=text], .field-group input[type=datetime-local], .field-group textarea, .field-group select{
   width:100%; font-family:'Outfit',sans-serif; font-size:14px; padding:11px 14px;
   border-radius:10px; border:2px solid var(--blush); background:white; color:var(--plum); outline:none;
 }
-.field-group input[type=text]:focus, .field-group textarea:focus{ border-color: var(--coral); }
+.field-group input[type=text]:focus, .field-group datetime-local:focus, .field-group textarea:focus, .field-group select:focus{ border-color: var(--coral); }
 .field-group textarea{ resize:vertical; min-height:60px; }
+.field-note { font-size: 12px; color: #7a6470; margin-top: 5px; line-height: 1.4; }
+
 .section-divider{ margin: 26px 0 14px; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--coral); }
 .memory-row{ background:white; border-radius:14px; padding:14px; margin-bottom:12px; display:flex; gap:12px; align-items:flex-start; }
 .memory-thumb{ width:64px; height:64px; border-radius:8px; background:var(--blush); flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden; font-size:26px; }
@@ -118,70 +169,154 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 .remove-memory{ background:none; border:none; color:#d94f4f; font-size:12px; cursor:pointer; padding:4px 0; }
 #add-memory-btn{ width:100%; padding:12px; border-radius:10px; border:2px dashed var(--blush); background:none; color:var(--coral); font-weight:600; font-size:13px; cursor:pointer; }
 #add-memory-btn:hover{ background: var(--blush); }
+
 .editor-actions{ display:flex; gap:10px; margin-top:26px; flex-wrap:wrap; }
-.editor-actions button{ flex:1; min-width:160px; padding:14px; border-radius:12px; border:none; font-family:'Outfit',sans-serif; font-weight:600; font-size:14px; cursor:pointer; }
 #download-btn{ background: var(--coral); color:white; }
-#download-btn:hover{ background:#d96f52; }
+#download-btn:hover{ filter: brightness(1.1); }
 #preview-btn{ background:white; color:var(--plum); border:2px solid var(--blush) !important; }
 #preview-btn:hover{ background: var(--blush); }
 #close-editor{ background:none; color:#a68f9c; text-decoration:underline; border:none; cursor:pointer; font-size:13px; margin-top:14px; width:100%; }
 #editor-status{ font-size:12px; color: var(--sage); margin-top:10px; min-height:16px; }
+
+#video-overlay {
+  display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;
+}
+#video-overlay.show { display: flex; animation: fadeIn 0.4s ease; }
+.video-modal-card {
+  background: var(--card); border-radius: 24px; max-width: 600px; width: 100%; padding: 28px;
+  text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+.video-modal-card h3 { font-size: 22px; margin-bottom: 8px; color: var(--plum); }
+.video-modal-card p { font-size: 14px; color: #7a6470; margin-bottom: 20px; }
+.video-container { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 14px; overflow: hidden; margin-bottom: 20px; }
+.video-container iframe, .video-container video { width: 100%; height: 100%; border: none; object-fit: cover; }
+#skip-video-btn {
+  background: var(--plum); color: white; border: none; border-radius: 999px; font-family: 'Outfit', sans-serif;
+  font-weight: 600; font-size: 15px; padding: 14px 28px; cursor: pointer; transition: transform 0.15s, filter 0.2s;
+}
+#skip-video-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
 </style>
 </head>
-<body>
+<body class="theme-birthday">
 
 <div id="petal-field"></div>
 
-<button id="editor-toggle" onclick="openEditor()">🎨 Customize &amp; add photos</button>
+<div id="video-overlay">
+  <div class="video-modal-card">
+    <h3>A Special Video For You </h3>
+    <p>Watch this quick message before your gift opens!</p>
+    <div class="video-container" id="video-player-wrap"></div>
+    <button id="skip-video-btn" onclick="closeVideoOverlay()">Continue to Gift </button>
+  </div>
+</div>
 
 <div id="editor-backdrop">
   <div id="editor-panel">
-    <h2>Customize this gift</h2>
-    <p class="sub">Fill this out, add real photos, then download the finished file to send.</p>
+    <h2>Customize This Gift</h2>
+    <p class="sub">Configure your card, add your files, and export a standalone gift website!</p>
 
     <div class="field-group">
-      <label>Secret code (what your friend types to unlock it)</label>
+      <label>Occasion Type</label>
+      <select id="f-occasion" onchange="onOccasionChange()">
+        <option value="birthday">🎂 Birthday</option>
+        <option value="anniversary">💍 Anniversary </option>
+        <option value="askout">💌 Asking You Out </option>
+        <option value="love">💖 Love Note</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label>Secret Code</label>
       <input type="text" id="f-code" value="BESTFRIEND">
     </div>
     <div class="field-group">
-      <label>Hint shown under the code box (optional)</label>
+      <label>Hint Shown Under Code Box</label>
       <input type="text" id="f-hint" value="hint: what you call me 😉">
     </div>
     <div class="field-group">
-      <label>Their name</label>
+      <label>Countdown Target Date & Time (Optional)</label>
+      <input type="datetime-local" id="f-targetdate">
+      <div class="field-note">If set, the card cannot be unlocked until this exact date and time arrives.</div>
+    </div>
+    <div class="field-group">
+      <label>Recipient's Name</label>
       <input type="text" id="f-name" value="Sarah">
     </div>
     <div class="field-group">
-      <label>Birthday message</label>
-      <textarea id="f-message">Every year I get to know you feels like a gift. Here's a little collage of us — happy birthday to my favorite person to make memories with.</textarea>
+      <label>Main Headline / Wish Text</label>
+      <textarea id="f-message">Every year I get to know you feels like a gift. Here is a little collage of us, happy birthday to my favorite person to make memories with.</textarea>
     </div>
 
-    <div class="section-divider">Memories</div>
+    <div class="section-divider">Scratch Off Secret Message</div>
+    <div class="field-group">
+      <label>Hidden Scratch Off Message</label>
+      <input type="text" id="f-scratch" value="You are my absolute favorite human! ❤️">
+    </div>
+
+    <div class="section-divider">Video Message (Optional)</div>
+    <div class="field-group">
+      <label>Upload Video from Computer</label>
+      <input type="file" id="f-video-file" accept="video/*" onchange="handleVideoUpload(event)">
+    </div>
+
+    <div class="section-divider">Memory Lane Photos</div>
     <div id="memory-rows"></div>
     <button id="add-memory-btn" onclick="addMemoryRow()">+ Add a memory</button>
 
     <div class="editor-actions">
-      <button id="preview-btn" onclick="previewAsFriend()">👀 Preview</button>
-      <button id="download-btn" onclick="downloadFinishedSite()">⬇ Download finished gift</button>
+      <button id="preview-btn" onclick="previewAsFriend()">👀 Preview Card</button>
+      <button id="download-btn" onclick="downloadFinishedSite()">⬇ Download Shareable Gift File</button>
     </div>
     <div id="editor-status"></div>
-    <button id="close-editor" onclick="closeEditor()">Close</button>
+    <button id="close-editor" onclick="closeEditor()">Close Editor</button>
   </div>
 </div>
 
-<div id="lock">
+<div id="screen-picker" class="screen active">
+  <div class="picker-container">
+    <div class="picker-card">
+      <h1>Choose an Occasion ✨</h1>
+      <p>What kind of special card would you like to create or explore?</p>
+      <div class="occasion-grid">
+        <button class="occ-btn selected" onclick="selectPickerOccasion('birthday', this)">🎂 Birthday</button>
+        <button class="occ-btn" onclick="selectPickerOccasion('anniversary', this)">💍 Anniversary</button>
+        <button class="occ-btn" onclick="selectPickerOccasion('askout', this)">💌 Ask Out</button>
+        <button class="occ-btn" onclick="selectPickerOccasion('love', this)">💖 Love Note</button>
+      </div>
+      <button id="start-card-btn" onclick="proceedToLock()">Next: Enter Password Gate →</button>
+    </div>
+  </div>
+</div>
+
+<div id="screen-lock" class="screen">
   <div class="lock-card">
-    <div class="lock-eyebrow">A gift for you</div>
-    <h1>Something's<br>waiting inside 🎁</h1>
+    <div class="lock-eyebrow">A special gift for you</div>
+    <h1>Something is<br>waiting inside 🎁</h1>
     <p>Enter your secret code to open it.</p>
+    
+    <div id="countdown-box">
+      <div>Unlock available in:</div>
+      <div id="countdown-digits">00d 00h 00m 00s</div>
+    </div>
+
     <input id="code-input" type="text" placeholder="ENTER CODE" autocomplete="off" maxlength="30">
     <button id="unlock-btn" onclick="tryUnlock()">Unlock my gift</button>
     <div id="lock-error"></div>
     <div id="hint"></div>
+    <button class="back-link" id="back-to-picker-btn" onclick="goToPicker()">← Choose different occasion</button>
   </div>
 </div>
 
-<div id="celebration">
+<div id="screen-celebration" class="screen">
+  <div class="top-editor-container" id="top-editor-wrapper">
+    <div class="top-nav-row">
+      <button id="editor-toggle" onclick="openEditor()">🎨 Customize Card</button>
+      <button class="sample-menu-btn" onclick="backToPickerMenu()">← Occasions Menu</button>
+    </div>
+    <div class="editor-sample-text">✨ This is a sample, click customize to create your own!</div>
+  </div>
+
   <section class="hero">
     <svg id="flower-wrap" viewBox="0 0 200 200">
       <g id="petals"></g>
@@ -194,45 +329,197 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 
   <section id="collage">
     <div class="collage-heading">
-      <div class="eyebrow">Memory Lane</div>
-      <h3>A few of my favorite moments</h3>
+      <div class="eyebrow" id="collage-eyebrow">Memory Lane</div>
+      <h3 id="collage-title">A few of my favorite moments</h3>
     </div>
     <div class="collage-grid" id="collage-grid"></div>
   </section>
 
+  <section id="scratch-section">
+    <div class="collage-heading" style="margin-bottom:20px;">
+      <div class="eyebrow">Interactive Secret</div>
+      <h3 style="font-size:24px;">Scratch to reveal a secret! 🪄</h3>
+    </div>
+    <div class="scratch-card-box">
+      <div class="scratch-secret" id="scratch-text-target">You are my absolute favorite human! ❤️</div>
+      <canvas id="scratch-canvas"></canvas>
+    </div>
+  </section>
+
   <section id="closing">
-    <h3>Before you go...</h3>
-    <p>Make a wish and blow out the candles. I hope this year brings you everything you're hoping for.</p>
+    <h3 id="closing-heading">Before you go...</h3>
+    <p id="closing-sub">Make a wish and blow out the candles. I hope this year brings you everything you are hoping for.</p>
+    
     <button id="wish-btn" onclick="makeWish()">🕯️ Make a wish</button>
-    <div id="signed">— with love, always</div>
+    
+    <div id="proposal-box" style="display:none;">
+      <button id="yes-btn" onclick="sayYes()">Yes! 💖</button>
+      <button id="no-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">No 🙈</button>
+    </div>
+
+    <div id="signed">with love, always</div>
   </section>
 </div>
 
 <script>
-
-const ORIGINAL_HTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-
-const CONFIG = /*CONFIG_JSON*/{
+const CONFIG = {
+  "isSample": true,
+  "occasion": "birthday",
   "code": "BESTFRIEND",
   "hint": "hint: what you call me 😉",
+  "targetDate": "",
   "name": "Sarah",
-  "message": "Every year I get to know you feels like a gift. Here's a little collage of us — happy birthday to my favorite person to make memories with.",
+  "message": "Every year I get to know you feels like a gift. Here is a little collage of us, happy birthday to my favorite person to make memories with.",
+  "scratchMessage": "You are my absolute favorite human! ❤️",
+  "videoUrl": "",
   "memories": [
     { "src": "", "emoji": "🎈", "caption": "The day we met" },
     { "src": "", "emoji": "🌊", "caption": "That beach trip we still talk about" },
     { "src": "", "emoji": "🍕", "caption": "3am pizza and bad decisions" },
-    { "src": "", "emoji": "🎓", "caption": "Cheering you on at graduation" },
+    { "src": "", "emoji": "🎓", "caption": "Cheering you on" },
     { "src": "", "emoji": "🚗", "caption": "That road trip playlist" },
     { "src": "", "emoji": "✨", "caption": "Just being us" }
   ]
-}/*END_CONFIG_JSON*/;
+};
 
-function personalize(){
-  document.getElementById('hero-heading').textContent = `Happy Birthday, ${CONFIG.name}!`;
+let tempSelectedOccasion = 'birthday';
+let countdownInterval = null;
+
+function selectPickerOccasion(occ, btnEl) {
+  tempSelectedOccasion = occ;
+  document.querySelectorAll('.occ-btn').forEach(b => b.classList.remove('selected'));
+  btnEl.classList.add('selected');
+}
+
+function proceedToLock() {
+  CONFIG.occasion = tempSelectedOccasion;
+  onOccasionChangePresets();
+  applyThemeAndOccasion();
+  
+  document.getElementById('screen-picker').classList.remove('active');
+  document.getElementById('screen-lock').classList.add('active');
+}
+
+function goToPicker() {
+  document.getElementById('screen-lock').classList.remove('active');
+  document.getElementById('screen-picker').classList.add('active');
+  if(countdownInterval) clearInterval(countdownInterval);
+}
+
+function backToPickerMenu() {
+  document.getElementById('screen-celebration').classList.remove('active');
+  document.getElementById('screen-lock').classList.remove('active');
+  document.getElementById('screen-picker').classList.add('active');
+  if(countdownInterval) clearInterval(countdownInterval);
+}
+
+function onOccasionChangePresets() {
+  const occ = CONFIG.occasion;
+  if(occ === 'birthday'){
+    CONFIG.code = "BESTFRIEND";
+    CONFIG.hint = "hint: what you call me 😉";
+    CONFIG.message = "Every year I get to know you feels like a gift. Here is a little collage of us, happy birthday to my favorite person to make memories with.";
+  } else if(occ === 'anniversary'){
+    CONFIG.code = "I LOVE U";
+    CONFIG.hint = "hint: three little words ❤️";
+    CONFIG.message = "Every moment with you feels like magic. Happy anniversary to my favorite person.";
+  } else if(occ === 'askout'){
+    CONFIG.code = "I LOVE U";
+    CONFIG.hint = "hint: special phrase ✨";
+    CONFIG.message = "I have been meaning to ask you this for a while, and I figured there is no better way.";
+  } else {
+    CONFIG.code = "I LOVE U";
+    CONFIG.hint = "hint: forever and always...";
+    CONFIG.message = "Just wanted to remind you how much you mean to me today and always.";
+  }
+}
+
+function applyThemeAndOccasion(){
+  document.body.className = `theme-${CONFIG.occasion}`;
+  
+  const heading = document.getElementById('hero-heading');
+  const closingH = document.getElementById('closing-heading');
+  const closingSub = document.getElementById('closing-sub');
+  const wishBtn = document.getElementById('wish-btn');
+  const propBox = document.getElementById('proposal-box');
+
+  if(CONFIG.occasion === 'birthday'){
+    heading.textContent = `Happy Birthday, ${CONFIG.name}!` ;
+    closingH.textContent = "Before you go...";
+    closingSub.textContent = "Make a wish and blow out the candles. I hope this year brings you everything you are hoping for.";
+    wishBtn.style.display = 'inline-block';
+    wishBtn.textContent = '🕯️ Make a wish';
+    propBox.style.display = 'none';
+  } else {
+    if(CONFIG.occasion === 'anniversary'){
+      heading.textContent = `Happy Anniversary, ${CONFIG.name}!` ;
+      closingH.textContent = "To many more years...";
+      closingSub.textContent = "Thank you for every single smile, laugh, and memory we share together.";
+      wishBtn.style.display = 'inline-block';
+      wishBtn.textContent = '🥂 Cheers to us';
+      propBox.style.display = 'none';
+    } else if(CONFIG.occasion === 'askout'){
+      heading.textContent = `Hey ${CONFIG.name}...`;
+      closingH.textContent = "So, what do you say?";
+      closingSub.textContent = "I was wondering if you would want to go out on a date with me sometime?";
+      wishBtn.style.display = 'none';
+      propBox.style.display = 'flex';
+    } else {
+      heading.textContent = `For You, ${CONFIG.name} 💖`;
+      closingH.textContent = "Just a reminder...";
+      closingSub.textContent = "You mean the absolute world to me. Thank you for being you.";
+      wishBtn.style.display = 'inline-block';
+      wishBtn.textContent = '💖 Send a hug';
+      propBox.style.display = 'none';
+    }
+  }
+
   document.getElementById('hero-subline').textContent = CONFIG.message;
   document.getElementById('hint').textContent = CONFIG.hint || "";
+  document.getElementById('code-input').value = "";
+  document.getElementById('lock-error').textContent = "";
+
+  setupCountdown();
 }
-personalize();
+
+function setupCountdown() {
+  if(countdownInterval) clearInterval(countdownInterval);
+  const box = document.getElementById('countdown-box');
+  if(!CONFIG.targetDate) {
+    box.style.display = 'none';
+    return;
+  }
+  
+  const targetTime = new Date(CONFIG.targetDate).getTime();
+  if(isNaN(targetTime)) {
+    box.style.display = 'none';
+    return;
+  }
+
+  box.style.display = 'block';
+  const digits = document.getElementById('countdown-digits');
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const diff = targetTime - now;
+
+    if(diff <= 0) {
+      digits.textContent = "It's time! Open your gift 🎉";
+      clearInterval(countdownInterval);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    digits.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
+  }
+
+  updateTimer();
+  countdownInterval = setInterval(updateTimer, 1000);
+}
 
 const petalField = document.getElementById('petal-field');
 for(let i=0;i<16;i++){
@@ -274,7 +561,44 @@ function renderCollage(){
     grid.appendChild(card);
   });
 }
-renderCollage();
+
+function initScratchCard() {
+  document.getElementById('scratch-text-target').textContent = CONFIG.scratchMessage || "You are loved!";
+  const canvas = document.getElementById('scratch-canvas');
+  const ctx = canvas.getContext('2d');
+  
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  ctx.fillStyle = '#b0a8b9';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#6e6275';
+  ctx.font = 'bold 15px Outfit, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('✨ Scratch here with your mouse/finger ✨', canvas.width / 2, canvas.height / 2);
+
+  ctx.globalCompositeOperation = 'destination-out';
+
+  let isDrawing = false;
+
+  function scratch(e) {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    ctx.beginPath();
+    ctx.arc(x, y, 22, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  canvas.onmousedown = () => isDrawing = true;
+  window.onmouseup = () => isDrawing = false;
+  canvas.onmousemove = scratch;
+
+  canvas.ontouchstart = () => isDrawing = true;
+  window.ontouchend = () => isDrawing = false;
+  canvas.ontouchmove = scratch;
+}
 
 function buildFlower(){
   const petalsGroup = document.getElementById('petals');
@@ -293,7 +617,6 @@ function buildFlower(){
     petalsGroup.appendChild(petal);
   }
 }
-buildFlower();
 
 function burstConfetti(count=70){
   const colors = ['#E8836A','#D9A441','#F3C9CE','#8FA787','#3D1F30'];
@@ -317,17 +640,61 @@ function tryUnlock(){
   const entered = input.value.trim().toLowerCase();
   const correct = CONFIG.code.trim().toLowerCase();
   if(entered.length === 0) return;
+
+  // Check if target date is set and hasn't arrived yet
+  if(CONFIG.targetDate) {
+    const targetTime = new Date(CONFIG.targetDate).getTime();
+    const now = new Date().getTime();
+    if(!isNaN(targetTime) && now < targetTime) {
+      const diff = targetTime - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      document.getElementById('lock-error').textContent = `Not yet! Time left: ${days}d ${hours}h ${mins}m ${secs}s ⏳`;
+      input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
+      return;
+    }
+  }
+
   if(entered === correct){
-    document.getElementById('lock').style.display='none';
-    const cel = document.getElementById('celebration');
-    cel.classList.add('show');
-    burstConfetti(90);
+    if(countdownInterval) clearInterval(countdownInterval);
+    document.getElementById('screen-lock').classList.remove('active');
+    
+    if (!CONFIG.isSample && CONFIG.videoUrl && CONFIG.videoUrl.trim() !== '') {
+      showVideoOverlay();
+    } else {
+      launchCelebration();
+    }
   } else {
-    document.getElementById('lock-error').textContent = "Not quite — try again!";
+    document.getElementById('lock-error').textContent = "Not quite, try again!";
     input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
   }
 }
 document.getElementById('code-input').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+
+function showVideoOverlay(){
+  const wrap = document.getElementById('video-player-wrap');
+  wrap.innerHTML = `<video src="${CONFIG.videoUrl}" controls autoplay></video>`;
+  document.getElementById('video-overlay').classList.add('show');
+}
+
+function closeVideoOverlay(){
+  const wrap = document.getElementById('video-player-wrap');
+  wrap.innerHTML = '';
+  document.getElementById('video-overlay').classList.remove('show');
+  launchCelebration();
+}
+
+function launchCelebration(){
+  const cel = document.getElementById('screen-celebration');
+  cel.classList.add('active');
+  renderCollage();
+  buildFlower();
+  initScratchCard();
+  burstConfetti(90);
+}
 
 let wished = false;
 function makeWish(){
@@ -335,20 +702,57 @@ function makeWish(){
   wished = true;
   burstConfetti(120);
   const btn = document.getElementById('wish-btn');
-  btn.textContent = '✨ Wish made';
+  btn.textContent = CONFIG.occasion === 'anniversary' ? '🥂 Cheers!' : '✨ Wish made';
   btn.disabled = true;
+}
+
+function moveNoButton() {
+  const btn = document.getElementById('no-btn');
+  const x = (Math.random() - 0.5) * 220;
+  const y = (Math.random() - 0.5) * 120;
+  btn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function sayYes() {
+  burstConfetti(150);
+  document.getElementById('closing-heading').textContent = "Yay! Best decision ever 🥰";
+  document.getElementById('closing-sub').textContent = "I am so excited. Let us make it happen!";
+  document.getElementById('proposal-box').style.display = 'none';
 }
 
 function openEditor(){
   document.getElementById('editor-backdrop').classList.add('show');
   renderMemoryRows();
+  document.getElementById('f-occasion').value = CONFIG.occasion;
   document.getElementById('f-code').value = CONFIG.code;
   document.getElementById('f-hint').value = CONFIG.hint;
+  document.getElementById('f-targetdate').value = CONFIG.targetDate || '';
   document.getElementById('f-name').value = CONFIG.name;
   document.getElementById('f-message').value = CONFIG.message;
+  document.getElementById('f-scratch').value = CONFIG.scratchMessage || '';
 }
 function closeEditor(){
   document.getElementById('editor-backdrop').classList.remove('show');
+}
+
+function onOccasionChange(){
+  const occ = document.getElementById('f-occasion').value;
+  CONFIG.occasion = occ;
+  onOccasionChangePresets();
+  document.getElementById('f-code').value = CONFIG.code;
+  document.getElementById('f-hint').value = CONFIG.hint;
+  document.getElementById('f-message').value = CONFIG.message;
+}
+
+function handleVideoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    CONFIG.videoUrl = ev.target.result;
+    document.getElementById('editor-status').textContent = '✓ Video uploaded successfully!';
+  };
+  reader.readAsDataURL(file);
 }
 
 function renderMemoryRows(){
@@ -427,46 +831,81 @@ function handlePhotoUpload(e, idx, thumbEl){
 }
 
 function syncFieldsToConfig(){
+  CONFIG.occasion = document.getElementById('f-occasion').value;
   CONFIG.code = document.getElementById('f-code').value.trim() || 'BESTFRIEND';
   CONFIG.hint = document.getElementById('f-hint').value;
+  CONFIG.targetDate = document.getElementById('f-targetdate').value;
   CONFIG.name = document.getElementById('f-name').value.trim() || 'Friend';
   CONFIG.message = document.getElementById('f-message').value;
+  CONFIG.scratchMessage = document.getElementById('f-scratch').value.trim();
 }
 
 function previewAsFriend(){
   syncFieldsToConfig();
-  personalize();
+  CONFIG.isSample = false;
+  applyThemeAndOccasion();
   renderCollage();
   closeEditor();
-  document.getElementById('lock').style.display='none';
-  document.getElementById('celebration').classList.add('show');
+  document.getElementById('screen-picker').classList.remove('active');
+  document.getElementById('screen-lock').classList.add('active');
+  document.getElementById('screen-celebration').classList.remove('active');
+  buildFlower();
+  initScratchCard();
   burstConfetti(60);
   document.getElementById('editor-status').textContent = '';
 }
 
 function downloadFinishedSite(){
   syncFieldsToConfig();
-  personalize();
-  renderCollage();
+  CONFIG.isSample = false;
+  
+  const cloneDoc = document.documentElement.cloneNode(true);
+  
+  const cloneCelebration = cloneDoc.querySelector('#screen-celebration');
+  if(cloneCelebration) cloneCelebration.classList.remove('active');
+  
+  const clonePicker = cloneDoc.querySelector('#screen-picker');
+  if(clonePicker) clonePicker.remove();
 
-  let html = ORIGINAL_HTML;
-  html = html.replace(/<!--SENDER_TOOLS_START-->[\s\S]*?<!--SENDER_TOOLS_END-->/, '');
-  const configJson = JSON.stringify(CONFIG, null, 2);
-  html = html.replace(/const CONFIG = \/\*CONFIG_JSON\*\/[\s\S]*?\/\*END_CONFIG_JSON\*\/;/, 'const CONFIG = /*CONFIG_JSON*/' + configJson + '/*END_CONFIG_JSON*/;');
+  const cloneLock = cloneDoc.querySelector('#screen-lock');
+  if(cloneLock) {
+    cloneLock.classList.add('active');
+    const backBtn = cloneLock.querySelector('#back-to-picker-btn');
+    if(backBtn) backBtn.remove();
+  }
 
-  const blob = new Blob([html], { type: 'text/html' });
+  const topWrapper = cloneDoc.querySelector('#top-editor-wrapper');
+  if(topWrapper) topWrapper.remove();
+  const backdrop = cloneDoc.querySelector('#editor-backdrop');
+  if(backdrop) backdrop.remove();
+
+  const scripts = cloneDoc.querySelectorAll('script');
+  scripts.forEach(s => {
+    if(s.textContent.includes('const CONFIG =')) {
+      s.textContent = `const CONFIG = ${JSON.stringify(CONFIG, null, 2)};\n` + s.textContent.replace(/const CONFIG = \{[\s\S]*?\};/, '');
+    }
+  });
+
+  const blob = new Blob(['<!DOCTYPE html>\n' + cloneDoc.outerHTML], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   const safeName = (CONFIG.name || 'gift').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   a.href = url;
-  a.download = `birthday-gift-for-${safeName || 'you'}.html`;
+  a.download = `${CONFIG.occasion}-card-for-${safeName || 'you'}.html`;
   document.body.appendChild(a);
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
 
-  document.getElementById('editor-status').textContent = '✓ Downloaded! Send that file to your friend.';
+  document.getElementById('editor-status').textContent = '✓ Downloaded successfully with the updated time-left message!';
+}
+
+if (!CONFIG.isSample) {
+  document.getElementById('screen-picker').classList.remove('active');
+  document.getElementById('screen-lock').classList.add('active');
+  applyThemeAndOccasion();
 }
 </script>
 </body>
 </html>
+
