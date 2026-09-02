@@ -53,11 +53,23 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 #countdown-box { display: none; background: var(--cream); border-radius: 12px; padding: 12px; margin-bottom: 20px; font-size: 13px; font-weight: 600; color: var(--plum); }
 #countdown-digits { display: flex; justify-content: center; gap: 10px; margin-top: 6px; font-size: 16px; color: var(--coral); font-family: 'Fraunces', serif; }
 
+.lock-input-wrap { display: flex; flex-direction: column; gap: 10px; }
 #code-input{ width:100%; font-family:'Outfit', sans-serif; font-size:18px; letter-spacing:0.1em; text-align:center; text-transform:uppercase; padding:16px 18px; border-radius:14px; border:2px solid var(--blush); background: var(--cream); color: var(--plum); outline:none; transition: border-color 0.2s, transform 0.15s; }
 #code-input:focus{ border-color: var(--coral); }
 #code-input.shake{ animation: shake 0.4s; border-color:#d94f4f; }
 @keyframes shake{ 20%,60%{ transform: translateX(-8px); } 40%,80%{ transform: translateX(8px); } }
-#unlock-btn{ margin-top:16px; width:100%; font-family:'Outfit', sans-serif; font-weight:600; font-size:16px; padding:16px; border:none; border-radius:14px; background: var(--coral); color: white; cursor:pointer; transition: background 0.2s, transform 0.15s; }
+
+.voice-unlock-btn {
+  width: 100%; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 14px; padding: 13px;
+  border-radius: 14px; border: 2px dashed var(--coral); background: var(--cream); color: var(--coral);
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s;
+}
+.voice-unlock-btn:hover { background: var(--blush); }
+.voice-unlock-btn.listening { background: var(--coral); color: white; border-style: solid; animation: pulseVoice 1.2s infinite; }
+@keyframes pulseVoice { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+#unlock-btn{ width:100%; font-family:'Outfit', sans-serif; font-weight:600; font-size:16px; padding:16px; border:none; border-radius:14px; background: var(--coral); color: white; cursor:pointer; transition: background 0.2s, transform 0.15s; }
 #unlock-btn:hover{ filter: brightness(1.08); transform: translateY(-1px); }
 #hint{ margin-top:18px; font-size:13px; color:#a68f9c; }
 #lock-error{ margin-top:12px; font-size:13px; color:#d94f4f; min-height:16px; font-weight: 500; line-height: 1.4; }
@@ -115,18 +127,48 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 .photo-box img{ width:100%; height:100%; object-fit:cover; display:block; }
 .polaroid figcaption{ margin-top:12px; font-size:14px; text-align:center; color:#5c4753; line-height:1.4; }
 
+#trivia-section { padding: 20px 24px 60px; max-width: 500px; margin: 0 auto; text-align: center; }
+.trivia-box { background: var(--card); padding: 24px; border-radius: 16px; box-shadow: 0 16px 32px -12px rgba(61,31,48,0.25); border: 2px solid var(--blush); }
+.trivia-btn { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--blush); background: var(--cream); color: var(--plum); font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
+.trivia-btn:hover { border-color: var(--coral); background: var(--coral); color: white; transform: translateY(-1px); }
+
 #scratch-section { padding: 20px 24px 60px; max-width: 500px; margin: 0 auto; text-align: center; }
 .scratch-card-box { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 16px 32px -12px rgba(61,31,48,0.25); display: flex; align-items: center; justify-content: center; }
 .scratch-secret { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; font-size: 16px; font-weight: 600; color: var(--plum); background: var(--blush); text-align: center; }
 #scratch-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
+#voice-note-container { display: none; max-width: 420px; width: 100%; margin: 0 auto 28px; background: var(--card); padding: 18px 24px; border-radius: 20px; box-shadow: 0 12px 30px -10px rgba(61,31,48,0.15); align-items: center; gap: 16px; border: 2px solid var(--blush); }
+#voice-note-container.show { display: flex; }
+.voice-play-btn { width: 48px; height: 48px; border-radius: 50%; background: var(--coral); color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; flex-shrink: 0; transition: transform 0.15s, filter 0.2s; }
+.voice-play-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+.voice-info { flex: 1; text-align: left; }
+.voice-title { font-size: 14px; font-weight: 600; color: var(--plum); margin-bottom: 4px; }
+.voice-waveform { display: flex; align-items: center; gap: 3px; height: 16px; }
+.wave-bar { width: 3px; background: var(--blush); border-radius: 2px; height: 100%; animation: pulseWave 1.2s ease-in-out infinite alternate; }
+.wave-bar:nth-child(2) { animation-delay: 0.2s; }
+.wave-bar:nth-child(3) { animation-delay: 0.4s; }
+.wave-bar:nth-child(4) { animation-delay: 0.1s; }
+.wave-bar:nth-child(5) { animation-delay: 0.5s; }
+@keyframes pulseWave { 0% { height: 4px; } 100% { height: 16px; } }
+.voice-timer { font-size: 12px; color: #7a6470; font-family: monospace; }
+
+.recorder-box { background: white; padding: 14px; border-radius: 12px; border: 2px solid var(--blush); text-align: center; }
+.recorder-controls { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+.rec-btn { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: 999px; border: none; cursor: pointer; transition: filter 0.2s; }
+#record-start-btn { background: #d94f4f; color: white; }
+#record-stop-btn { background: var(--plum); color: white; }
+#record-start-btn:disabled, #record-stop-btn:disabled { opacity: 0.4; cursor: default; }
+.rec-status-text { font-size: 13px; color: #7a6470; margin-top: 8px; font-weight: 500; }
+
 #closing{ text-align:center; padding: 20px 24px 120px; }
 #closing h3{ font-size: clamp(24px, 4vw, 34px); margin-bottom:14px; }
 #closing p{ color:#7a6470; max-width:460px; margin:0 auto 28px; line-height:1.6; }
 
-#wish-btn, #yes-btn{ font-family:'Outfit', sans-serif; font-weight:600; font-size:15px; padding:16px 30px; border:none; border-radius:999px; background: var(--plum); color:white; cursor:pointer; transition: transform 0.15s, background 0.2s; }
-#wish-btn:hover, #yes-btn:hover{ transform: translateY(-2px); filter: brightness(1.2); }
+#wish-btn, #yes-btn, #open-letter-btn{ font-family:'Outfit', sans-serif; font-weight:600; font-size:15px; padding:16px 30px; border:none; border-radius:999px; background: var(--plum); color:white; cursor:pointer; transition: transform 0.15s, background 0.2s; }
+#wish-btn:hover, #yes-btn:hover, #open-letter-btn:hover{ transform: translateY(-2px); filter: brightness(1.2); }
 #wish-btn:disabled{ opacity:0.5; cursor:default; transform:none; }
+
+#open-letter-btn { background: var(--coral); margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 25px rgba(232,131,106,0.3); }
 
 #proposal-box{ display:flex; gap:14px; justify-content:center; align-items:center; margin-top:10px; }
 #yes-btn{ background: var(--coral); }
@@ -136,6 +178,32 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 
 .confetto{ position:fixed; top:-20px; z-index:50; pointer-events:none; border-radius:2px; animation: confetti-fall linear forwards; }
 @keyframes confetti-fall{ to{ transform: translateY(105vh) rotate(var(--spin, 360deg)); opacity:0.9; } }
+
+#letter-overlay {
+  display: none; position: fixed; inset: 0; z-index: 400; background: rgba(30,15,25,0.75);
+  backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 20px; overflow-y: auto;
+}
+#letter-overlay.show { display: flex; animation: fadeIn 0.4s ease; }
+.letter-scroll-card {
+  background: #FFFDF9; border-radius: 20px; max-width: 650px; width: 100%; max-height: 90vh;
+  padding: 40px 30px; box-shadow: 0 35px 70px rgba(0,0,0,0.4); overflow-y: auto; position: relative;
+  border: 4px solid #EFE4D0; background-image: linear-gradient(#FAF7F0 0%, #FFFDF9 100%);
+  animation: unrollScroll 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top;
+}
+@keyframes unrollScroll {
+  0% { transform: scaleY(0.1) translateY(-40px); opacity: 0; }
+  100% { transform: scaleY(1) translateY(0); opacity: 1; }
+}
+.letter-scroll-card h3 { font-size: 26px; color: var(--plum); margin-bottom: 6px; text-align: center; }
+.letter-scroll-card .letter-subtitle { font-size: 14px; color: #8a7480; text-align: center; margin-bottom: 24px; }
+.letter-page-img { width: 100%; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); border: 1px solid #ebdcd0; display: block; }
+.close-letter-btn {
+  display: block; margin: 10px auto 0; background: var(--plum); color: white; border: none;
+  padding: 12px 28px; border-radius: 999px; font-family: 'Outfit', sans-serif; font-weight: 600;
+  cursor: pointer; transition: filter 0.2s;
+}
+.close-letter-btn:hover { filter: brightness(1.2); }
 
 #editor-backdrop{
   display:none; position:fixed; inset:0; z-index:200;
@@ -202,6 +270,15 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 
 <div id="petal-field"></div>
 
+<div id="letter-overlay">
+  <div class="letter-scroll-card">
+    <h3>A Letter For You 📜</h3>
+    <div class="letter-subtitle">Written by hand, straight from the heart</div>
+    <div id="letter-pages-container"></div>
+    <button class="close-letter-btn" onclick="closeHandwrittenLetter()">Close Letter</button>
+  </div>
+</div>
+
 <div id="video-overlay">
   <div class="video-modal-card">
     <h3>A Special Video For You </h3>
@@ -211,24 +288,34 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
   </div>
 </div>
 
+<div id="easter-egg-overlay" style="display: none; position: fixed; inset: 0; z-index: 500; background: rgba(30,15,25,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: var(--card); border-radius: 20px; max-width: 400px; width: 100%; padding: 32px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.4); border: 2px solid var(--coral); animation: unrollScroll 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+    <div style="font-size: 36px; margin-bottom: 10px;">🎉</div>
+    <h3 style="font-size: 22px; color: var(--plum); margin-bottom: 10px;">Secret Unlocked!</h3>
+    <p id="easter-egg-text" style="font-size: 15px; color: #7a6470; margin-bottom: 24px; line-height: 1.5;"></p>
+    <button onclick="closeEasterEgg()" style="background: var(--plum); color: white; border: none; padding: 12px 24px; border-radius: 999px; font-family: 'Outfit', sans-serif; font-weight: 600; cursor: pointer;">Awesome!</button>
+  </div>
+</div>
+
 <div id="editor-backdrop">
   <div id="editor-panel">
     <h2>Customize This Gift</h2>
-    <p class="sub">Configure your card, add your files, and export a standalone gift website!</p>
+    <p class="sub">Configure your card add your files  and export a gift website!</p>
 
     <div class="field-group">
       <label>Occasion Type</label>
       <select id="f-occasion" onchange="onOccasionChange()">
         <option value="birthday">🎂 Birthday</option>
-        <option value="anniversary">💍 Anniversary </option>
-        <option value="askout">💌 Asking You Out </option>
+        <option value="anniversary">💍 Anniversary</option>
+        <option value="askout">💌 Asking You Out</option>
         <option value="love">💖 Love Note</option>
       </select>
     </div>
 
     <div class="field-group">
-      <label>Secret Code</label>
-      <input type="text" id="f-code" value="BESTFRIEND">
+      <label>Secret Passcode / Voice Phrase</label>
+      <input type="text" id="f-code" value="bestfriend">
+      <div class="field-note">Both typing and voice recognition will check against this phrase!</div>
     </div>
     <div class="field-group">
       <label>Hint Shown Under Code Box</label>
@@ -237,7 +324,6 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
     <div class="field-group">
       <label>Countdown Target Date & Time (Optional)</label>
       <input type="datetime-local" id="f-targetdate">
-      <div class="field-note">If set, the card cannot be unlocked until this exact date and time arrives.</div>
     </div>
     <div class="field-group">
       <label>Recipient's Name</label>
@@ -248,10 +334,67 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
       <textarea id="f-message">Every year I get to know you feels like a gift. Here is a little collage of us, happy birthday to my favorite person to make memories with.</textarea>
     </div>
 
+    <div class="section-divider">Mini Trivia Gate (Unlocks Scratch Card)</div>
+    <div class="field-group">
+      <label>Trivia Question</label>
+      <input type="text" id="f-trivia-q" value="What is my absolute favorite thing to do with you?">
+    </div>
+    <div class="field-group">
+      <label>Option 1</label>
+      <input type="text" id="f-trivia-opt0" value="Getting 3am pizza">
+    </div>
+    <div class="field-group">
+      <label>Option 2</label>
+      <input type="text" id="f-trivia-opt1" value="Making bad decisions">
+    </div>
+    <div class="field-group">
+      <label>Option 3</label>
+      <input type="text" id="f-trivia-opt2" value="Just hanging out anywhere">
+    </div>
+    <div class="field-group">
+      <label>Correct Answer Index</label>
+      <select id="f-trivia-correct">
+        <option value="0">Option 1 is correct</option>
+        <option value="1">Option 2 is correct</option>
+        <option value="2" selected>Option 3 is correct</option>
+      </select>
+    </div>
+
     <div class="section-divider">Scratch Off Secret Message</div>
     <div class="field-group">
       <label>Hidden Scratch Off Message</label>
       <input type="text" id="f-scratch" value="You are my absolute favorite human! ❤️">
+    </div>
+
+    <div class="section-divider">Secret Easter Egg </div>
+    <div class="field-group">
+      <label>Secret Word Trigger (typed anywhere on the page)</label>
+      <input type="text" id="f-easteregg-word" value="magic">
+    </div>
+    <div class="field-group">
+      <label>Surprise Message Popup Text</label>
+      <input type="text" id="f-easteregg-msg" value="You found the secret easter egg! You're amazing.">
+    </div>
+
+    <div class="section-divider">Handwritten Letter Photos 📜</div>
+    <div class="field-group">
+      <label>Upload Handwritten Letter Pages (Photos or Scans)</label>
+      <input type="file" id="f-letter-files" accept="image/*" multiple onchange="handleLetterUploads(event)">
+      <div id="editor-letter-previews" style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;"></div>
+    </div>
+
+    <div class="section-divider">Record Voice Note </div>
+    <div class="field-group">
+      <div class="recorder-box">
+        <div class="rec-status-text" id="rec-status-label">Click record to speak your message</div>
+        <div class="recorder-controls">
+          <button type="button" class="rec-btn" id="record-start-btn" onclick="startAudioRecording()">🔴 Record</button>
+          <button type="button" class="rec-btn" id="record-stop-btn" onclick="stopAudioRecording()" disabled>⏹ Stop</button>
+        </div>
+        <audio id="editor-audio-preview" controls style="width: 100%; margin-top: 12px; display: none;"></audio>
+      </div>
+      <div class="field-note">Or upload an audio file instead:</div>
+      <input type="file" id="f-audio-file" accept="audio/*" onchange="handleAudioUpload(event)" style="margin-top: 6px;">
     </div>
 
     <div class="section-divider">Video Message (Optional)</div>
@@ -265,7 +408,7 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
     <button id="add-memory-btn" onclick="addMemoryRow()">+ Add a memory</button>
 
     <div class="editor-actions">
-      <button id="preview-btn" onclick="previewAsFriend()">👀 Preview Card</button>
+      <button id="preview-btn" onclick="previewAsFriend()"> Preview Card</button>
       <button id="download-btn" onclick="downloadFinishedSite()">⬇ Download Shareable Gift File</button>
     </div>
     <div id="editor-status"></div>
@@ -293,15 +436,21 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
   <div class="lock-card">
     <div class="lock-eyebrow">A special gift for you</div>
     <h1>Something is<br>waiting inside 🎁</h1>
-    <p>Enter your secret code to open it.</p>
+    <p>Type your secret password or use your voice to unlock it!</p>
     
     <div id="countdown-box">
       <div>Unlock available in:</div>
       <div id="countdown-digits">00d 00h 00m 00s</div>
     </div>
 
-    <input id="code-input" type="text" placeholder="ENTER CODE" autocomplete="off" maxlength="30">
-    <button id="unlock-btn" onclick="tryUnlock()">Unlock my gift</button>
+    <div class="lock-input-wrap">
+      <input id="code-input" type="text" placeholder="ENTER CODE" autocomplete="off" maxlength="40">
+      <button type="button" class="voice-unlock-btn" id="voice-unlock-btn" onclick="toggleVoiceRecognition()">
+        🎤 Tap & Speak Passcode
+      </button>
+      <button id="unlock-btn" onclick="tryUnlock()">Unlock with Text</button>
+    </div>
+
     <div id="lock-error"></div>
     <div id="hint"></div>
     <button class="back-link" id="back-to-picker-btn" onclick="goToPicker()">← Choose different occasion</button>
@@ -335,7 +484,23 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
     <div class="collage-grid" id="collage-grid"></div>
   </section>
 
-  <section id="scratch-section">
+  <section id="trivia-section">
+    <div class="collage-heading" style="margin-bottom:20px;">
+      <div class="eyebrow">Fun Challenge</div>
+      <h3 style="font-size:24px;">Unlock the Scratch Card </h3>
+    </div>
+    <div class="trivia-box">
+      <p id="trivia-question" style="font-weight: 600; font-size: 15px; margin-bottom: 16px; color: var(--plum);">What is my absolute favorite thing to do with you?</p>
+      <div id="trivia-options" style="display: grid; gap: 10px;">
+        <button class="trivia-btn" id="t-opt-0" onclick="checkTrivia(0)">Getting 3am pizza</button>
+        <button class="trivia-btn" id="t-opt-1" onclick="checkTrivia(1)">Making bad decisions</button>
+        <button class="trivia-btn" id="t-opt-2" onclick="checkTrivia(2)">Just hanging out anywhere</button>
+      </div>
+      <p id="trivia-feedback" style="margin-top: 12px; font-size: 14px; font-weight: 600; min-height: 20px;"></p>
+    </div>
+  </section>
+
+  <section id="scratch-section" style="display: none;">
     <div class="collage-heading" style="margin-bottom:20px;">
       <div class="eyebrow">Interactive Secret</div>
       <h3 style="font-size:24px;">Scratch to reveal a secret! 🪄</h3>
@@ -350,6 +515,26 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
     <h3 id="closing-heading">Before you go...</h3>
     <p id="closing-sub">Make a wish and blow out the candles. I hope this year brings you everything you are hoping for.</p>
     
+    <div id="letter-btn-container" style="display:none; margin-bottom: 24px;">
+      <button id="open-letter-btn" onclick="openHandwrittenLetter()">📜 Open My Handwritten Letter</button>
+    </div>
+
+    <div id="voice-note-container">
+      <button class="voice-play-btn" id="voice-play-btn" onclick="toggleVoiceNote()">▶</button>
+      <div class="voice-info">
+        <div class="voice-title">Voice Note From Me 🎙️</div>
+        <div class="voice-waveform">
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+        </div>
+        <div class="voice-timer" id="voice-timer">0:00</div>
+      </div>
+    </div>
+    <audio id="card-audio-element" style="display:none;"></audio>
+
     <button id="wish-btn" onclick="makeWish()">🕯️ Make a wish</button>
     
     <div id="proposal-box" style="display:none;">
@@ -365,12 +550,27 @@ h1,h2,h3{ font-family:'Fraunces', serif; font-weight:700; }
 const CONFIG = {
   "isSample": true,
   "occasion": "birthday",
-  "code": "BESTFRIEND",
+  "code": "bestfriend",
   "hint": "hint: what you call me 😉",
   "targetDate": "",
   "name": "Sarah",
   "message": "Every year I get to know you feels like a gift. Here is a little collage of us, happy birthday to my favorite person to make memories with.",
+  "trivia": {
+    "question": "What is my absolute favorite thing to do with you?",
+    "options": [
+      "Getting 3am pizza",
+      "Making bad decisions",
+      "Just hanging out anywhere"
+    ],
+    "correctIndex": 2
+  },
   "scratchMessage": "You are my absolute favorite human! ❤️",
+  "easterEgg": {
+    "word": "magic",
+    "message": "✨ You found the secret easter egg! You're amazing. ✨"
+  },
+  "letterImages": [],
+  "audioUrl": "",
   "videoUrl": "",
   "memories": [
     { "src": "", "emoji": "🎈", "caption": "The day we met" },
@@ -384,6 +584,125 @@ const CONFIG = {
 
 let tempSelectedOccasion = 'birthday';
 let countdownInterval = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let speechRecognizer = null;
+let isListeningVoice = false;
+let typedBuffer = "";
+
+window.addEventListener('keydown', (e) => {
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+  
+  typedBuffer += e.key.toLowerCase();
+  if (typedBuffer.length > 20) {
+    typedBuffer = typedBuffer.slice(-20);
+  }
+
+  const targetWord = (CONFIG.easterEgg && CONFIG.easterEgg.word) ? CONFIG.easterEgg.word.toLowerCase() : "magic";
+  
+  if (typedBuffer.includes(targetWord)) {
+    typedBuffer = "";
+    triggerEasterEggPopup();
+  }
+});
+
+function triggerEasterEggPopup() {
+  const msg = (CONFIG.easterEgg && CONFIG.easterEgg.message) ? CONFIG.easterEgg.message : "You found the secret!";
+  document.getElementById('easter-egg-text').textContent = msg;
+  document.getElementById('easter-egg-overlay').style.display = 'flex';
+  burstConfetti(140);
+}
+
+function closeEasterEgg() {
+  document.getElementById('easter-egg-overlay').style.display = 'none';
+}
+
+function setupTriviaGame() {
+  document.getElementById('trivia-section').style.display = 'block';
+  document.getElementById('scratch-section').style.display = 'none';
+  document.getElementById('trivia-feedback').textContent = '';
+  document.getElementById('trivia-options').style.pointerEvents = 'auto';
+
+  document.getElementById('trivia-question').textContent = CONFIG.trivia.question;
+  document.getElementById('t-opt-0').textContent = CONFIG.trivia.options[0];
+  document.getElementById('t-opt-1').textContent = CONFIG.trivia.options[1];
+  document.getElementById('t-opt-2').textContent = CONFIG.trivia.options[2];
+}
+
+function checkTrivia(selectedIndex) {
+  const feedback = document.getElementById('trivia-feedback');
+  const optionsContainer = document.getElementById('trivia-options');
+  
+  if(selectedIndex === Number(CONFIG.trivia.correctIndex)) {
+    feedback.style.color = '#538d4e';
+    feedback.textContent = "Correct! You unlocked the scratch card 🎉";
+    optionsContainer.style.pointerEvents = 'none';
+    
+    setTimeout(() => {
+      document.getElementById('trivia-section').style.display = 'none';
+      const scratchSec = document.getElementById('scratch-section');
+      scratchSec.style.display = 'block';
+      initScratchCard();
+    }, 1200);
+  } else {
+    feedback.style.color = '#d94f4f';
+    feedback.textContent = "Not quite! Try another option 🙈";
+  }
+}
+
+function setupLetterButton() {
+  const btnContainer = document.getElementById('letter-btn-container');
+  if (CONFIG.letterImages && CONFIG.letterImages.length > 0) {
+    btnContainer.style.display = 'block';
+  } else {
+    btnContainer.style.display = 'none';
+  }
+}
+
+function openHandwrittenLetter() {
+  const container = document.getElementById('letter-pages-container');
+  container.innerHTML = '';
+  if(CONFIG.letterImages && CONFIG.letterImages.length > 0) {
+    CONFIG.letterImages.forEach((imgSrc) => {
+      const img = document.createElement('img');
+      img.src = imgSrc;
+      img.className = 'letter-page-img';
+      container.appendChild(img);
+    });
+  } else {
+    container.innerHTML = '<p style="text-align:center; color:#7a6470; padding:20px;">No handwritten letter images added yet!</p>';
+  }
+  document.getElementById('letter-overlay').classList.add('show');
+}
+
+function closeHandwrittenLetter() {
+  document.getElementById('letter-overlay').classList.remove('show');
+}
+
+function handleLetterUploads(e) {
+  const files = e.target.files;
+  if(!files || files.length === 0) return;
+  CONFIG.letterImages = [];
+  const previewWrap = document.getElementById('editor-letter-previews');
+  previewWrap.innerHTML = '';
+
+  Array.from(files).forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      CONFIG.letterImages.push(ev.target.result);
+      const thumb = document.createElement('img');
+      thumb.src = ev.target.result;
+      thumb.style.width = '60px';
+      thumb.style.height = '60px';
+      thumb.style.objectFit = 'cover';
+      thumb.style.borderRadius = '6px';
+      thumb.style.border = '2px solid var(--blush)';
+      previewWrap.appendChild(thumb);
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('editor-status').textContent = '✓ Handwritten letter pages loaded!';
+}
 
 function selectPickerOccasion(occ, btnEl) {
   tempSelectedOccasion = occ;
@@ -404,6 +723,7 @@ function goToPicker() {
   document.getElementById('screen-lock').classList.remove('active');
   document.getElementById('screen-picker').classList.add('active');
   if(countdownInterval) clearInterval(countdownInterval);
+  stopVoiceRecognition();
 }
 
 function backToPickerMenu() {
@@ -411,24 +731,25 @@ function backToPickerMenu() {
   document.getElementById('screen-lock').classList.remove('active');
   document.getElementById('screen-picker').classList.add('active');
   if(countdownInterval) clearInterval(countdownInterval);
+  stopVoiceRecognition();
 }
 
 function onOccasionChangePresets() {
   const occ = CONFIG.occasion;
   if(occ === 'birthday'){
-    CONFIG.code = "BESTFRIEND";
+    CONFIG.code = "bestfriend";
     CONFIG.hint = "hint: what you call me 😉";
     CONFIG.message = "Every year I get to know you feels like a gift. Here is a little collage of us, happy birthday to my favorite person to make memories with.";
   } else if(occ === 'anniversary'){
-    CONFIG.code = "I LOVE U";
+    CONFIG.code = "i love u";
     CONFIG.hint = "hint: three little words ❤️";
     CONFIG.message = "Every moment with you feels like magic. Happy anniversary to my favorite person.";
   } else if(occ === 'askout'){
-    CONFIG.code = "I LOVE U";
+    CONFIG.code = "i love u";
     CONFIG.hint = "hint: special phrase ✨";
     CONFIG.message = "I have been meaning to ask you this for a while, and I figured there is no better way.";
   } else {
-    CONFIG.code = "I LOVE U";
+    CONFIG.code = "i love u";
     CONFIG.hint = "hint: forever and always...";
     CONFIG.message = "Just wanted to remind you how much you mean to me today and always.";
   }
@@ -444,7 +765,7 @@ function applyThemeAndOccasion(){
   const propBox = document.getElementById('proposal-box');
 
   if(CONFIG.occasion === 'birthday'){
-    heading.textContent = `Happy Birthday, ${CONFIG.name}!` ;
+    heading.textContent = `Happy Birthday, ${CONFIG.name}!`;
     closingH.textContent = "Before you go...";
     closingSub.textContent = "Make a wish and blow out the candles. I hope this year brings you everything you are hoping for.";
     wishBtn.style.display = 'inline-block';
@@ -452,7 +773,7 @@ function applyThemeAndOccasion(){
     propBox.style.display = 'none';
   } else {
     if(CONFIG.occasion === 'anniversary'){
-      heading.textContent = `Happy Anniversary, ${CONFIG.name}!` ;
+      heading.textContent = `Happy Anniversary, ${CONFIG.name}!`;
       closingH.textContent = "To many more years...";
       closingSub.textContent = "Thank you for every single smile, laugh, and memory we share together.";
       wishBtn.style.display = 'inline-block';
@@ -479,7 +800,162 @@ function applyThemeAndOccasion(){
   document.getElementById('code-input').value = "";
   document.getElementById('lock-error').textContent = "";
 
+  setupVoicePlayer();
+  setupLetterButton();
   setupCountdown();
+}
+
+function setupVoicePlayer() {
+  const container = document.getElementById('voice-note-container');
+  const audioEl = document.getElementById('card-audio-element');
+  if(CONFIG.audioUrl && CONFIG.audioUrl.trim() !== '') {
+    audioEl.src = CONFIG.audioUrl;
+    container.classList.add('show');
+  } else {
+    container.classList.remove('show');
+    audioEl.src = '';
+  }
+}
+
+function toggleVoiceNote() {
+  const audioEl = document.getElementById('card-audio-element');
+  const btn = document.getElementById('voice-play-btn');
+  const timer = document.getElementById('voice-timer');
+
+  if(audioEl.paused) {
+    audioEl.play();
+    btn.textContent = '⏸';
+  } else {
+    audioEl.pause();
+    btn.textContent = '▶';
+  }
+
+  audioEl.ontimeupdate = () => {
+    let mins = Math.floor(audioEl.currentTime / 60);
+    let secs = Math.floor(audioEl.currentTime % 60);
+    if(secs < 10) secs = '0' + secs;
+    timer.textContent = `${mins}:${secs}`;
+  };
+
+  audioEl.onended = () => {
+    btn.textContent = '▶';
+    timer.textContent = '0:00';
+  };
+}
+
+async function startAudioRecording() {
+  audioChunks = [];
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    
+    mediaRecorder.ondataavailable = e => {
+      if(e.data.size > 0) audioChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        CONFIG.audioUrl = ev.target.result;
+        const preview = document.getElementById('editor-audio-preview');
+        preview.src = CONFIG.audioUrl;
+        preview.style.display = 'block';
+        document.getElementById('editor-status').textContent = '✓ Voice recording saved successfully!';
+        document.getElementById('rec-status-label').textContent = 'Recording complete! You can preview it below.';
+      };
+      reader.readAsDataURL(audioBlob);
+      
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    mediaRecorder.start();
+    document.getElementById('record-start-btn').disabled = true;
+    document.getElementById('record-stop-btn').disabled = false;
+    document.getElementById('rec-status-label').textContent = '🔴 Recording live... Speak now!';
+  } catch(err) {
+    alert('Microphone access denied or unavailable. Please check your browser permissions.');
+  }
+}
+
+function stopAudioRecording() {
+  if(mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    document.getElementById('record-start-btn').disabled = false;
+    document.getElementById('record-stop-btn').disabled = true;
+  }
+}
+
+function toggleVoiceRecognition() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("Speech recognition is not supported in this browser. Please use the text password input instead!");
+    return;
+  }
+
+  const voiceBtn = document.getElementById('voice-unlock-btn');
+
+  if (isListeningVoice) {
+    stopVoiceRecognition();
+    return;
+  }
+
+  speechRecognizer = new SpeechRecognition();
+  speechRecognizer.continuous = false;
+  speechRecognizer.interimResults = true;
+  speechRecognizer.lang = 'en-US';
+
+  speechRecognizer.onstart = () => {
+    isListeningVoice = true;
+    voiceBtn.classList.add('listening');
+    voiceBtn.innerHTML = '👂 Listening... Speak your passcode now!';
+    document.getElementById('lock-error').textContent = '';
+  };
+
+  speechRecognizer.onresult = (event) => {
+    const transcript = event.results[0][0].transcript.trim().toLowerCase();
+    document.getElementById('code-input').value = transcript;
+    
+    const correct = CONFIG.code.trim().toLowerCase();
+    if (transcript.includes(correct) || correct.includes(transcript)) {
+      stopVoiceRecognition();
+      document.getElementById('lock-error').style.color = '#538d4e';
+      document.getElementById('lock-error').textContent = `Matched voice: "${transcript}" 🎉`;
+      setTimeout(() => {
+        executeUnlockSuccess();
+      }, 600);
+    }
+  };
+
+  speechRecognizer.onerror = (event) => {
+    console.log("Speech recognition error", event.error);
+    stopVoiceRecognition();
+    document.getElementById('lock-error').style.color = '#d94f4f';
+    document.getElementById('lock-error').textContent = "Microphone speech unclear. Try typing instead!";
+  };
+
+  speechRecognizer.onend = () => {
+    stopVoiceRecognition();
+  };
+
+  try {
+    speechRecognizer.start();
+  } catch(e) {
+    stopVoiceRecognition();
+  }
+}
+
+function stopVoiceRecognition() {
+  if (speechRecognizer) {
+    try { speechRecognizer.stop(); } catch(e){}
+    speechRecognizer = null;
+  }
+  isListeningVoice = false;
+  const voiceBtn = document.getElementById('voice-unlock-btn');
+  if(voiceBtn) {
+    voiceBtn.classList.remove('listening');
+    voiceBtn.innerHTML = '🎤 Tap & Speak Passcode';
+  }
 }
 
 function setupCountdown() {
@@ -636,12 +1112,12 @@ function burstConfetti(count=70){
 }
 
 function tryUnlock(){
+  stopVoiceRecognition();
   const input = document.getElementById('code-input');
   const entered = input.value.trim().toLowerCase();
   const correct = CONFIG.code.trim().toLowerCase();
   if(entered.length === 0) return;
 
-  // Check if target date is set and hasn't arrived yet
   if(CONFIG.targetDate) {
     const targetTime = new Date(CONFIG.targetDate).getTime();
     const now = new Date().getTime();
@@ -652,6 +1128,7 @@ function tryUnlock(){
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const secs = Math.floor((diff % (1000 * 60)) / 1000);
       
+      document.getElementById('lock-error').style.color = '#d94f4f';
       document.getElementById('lock-error').textContent = `Not yet! Time left: ${days}d ${hours}h ${mins}m ${secs}s ⏳`;
       input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
       return;
@@ -659,19 +1136,25 @@ function tryUnlock(){
   }
 
   if(entered === correct){
-    if(countdownInterval) clearInterval(countdownInterval);
-    document.getElementById('screen-lock').classList.remove('active');
-    
-    if (!CONFIG.isSample && CONFIG.videoUrl && CONFIG.videoUrl.trim() !== '') {
-      showVideoOverlay();
-    } else {
-      launchCelebration();
-    }
+    executeUnlockSuccess();
   } else {
+    document.getElementById('lock-error').style.color = '#d94f4f';
     document.getElementById('lock-error').textContent = "Not quite, try again!";
     input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
   }
 }
+
+function executeUnlockSuccess() {
+  if(countdownInterval) clearInterval(countdownInterval);
+  document.getElementById('screen-lock').classList.remove('active');
+  
+  if (!CONFIG.isSample && CONFIG.videoUrl && CONFIG.videoUrl.trim() !== '') {
+    showVideoOverlay();
+  } else {
+    launchCelebration();
+  }
+}
+
 document.getElementById('code-input').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
 
 function showVideoOverlay(){
@@ -691,8 +1174,9 @@ function launchCelebration(){
   const cel = document.getElementById('screen-celebration');
   cel.classList.add('active');
   renderCollage();
+  setupTriviaGame();
+  setupLetterButton();
   buildFlower();
-  initScratchCard();
   burstConfetti(90);
 }
 
@@ -729,7 +1213,25 @@ function openEditor(){
   document.getElementById('f-targetdate').value = CONFIG.targetDate || '';
   document.getElementById('f-name').value = CONFIG.name;
   document.getElementById('f-message').value = CONFIG.message;
+  
+  document.getElementById('f-trivia-q').value = CONFIG.trivia.question;
+  document.getElementById('f-trivia-opt0').value = CONFIG.trivia.options[0];
+  document.getElementById('f-trivia-opt1').value = CONFIG.trivia.options[1];
+  document.getElementById('f-trivia-opt2').value = CONFIG.trivia.options[2];
+  document.getElementById('f-trivia-correct').value = CONFIG.trivia.correctIndex;
+
   document.getElementById('f-scratch').value = CONFIG.scratchMessage || '';
+  
+  if(CONFIG.easterEgg) {
+    document.getElementById('f-easteregg-word').value = CONFIG.easterEgg.word || 'magic';
+    document.getElementById('f-easteregg-msg').value = CONFIG.easterEgg.message || '';
+  }
+  
+  if(CONFIG.audioUrl) {
+    const preview = document.getElementById('editor-audio-preview');
+    preview.src = CONFIG.audioUrl;
+    preview.style.display = 'block';
+  }
 }
 function closeEditor(){
   document.getElementById('editor-backdrop').classList.remove('show');
@@ -742,6 +1244,20 @@ function onOccasionChange(){
   document.getElementById('f-code').value = CONFIG.code;
   document.getElementById('f-hint').value = CONFIG.hint;
   document.getElementById('f-message').value = CONFIG.message;
+}
+
+function handleAudioUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    CONFIG.audioUrl = ev.target.result;
+    const preview = document.getElementById('editor-audio-preview');
+    preview.src = CONFIG.audioUrl;
+    preview.style.display = 'block';
+    document.getElementById('editor-status').textContent = '✓ Voice note file uploaded successfully!';
+  };
+  reader.readAsDataURL(file);
 }
 
 function handleVideoUpload(e){
@@ -832,12 +1348,23 @@ function handlePhotoUpload(e, idx, thumbEl){
 
 function syncFieldsToConfig(){
   CONFIG.occasion = document.getElementById('f-occasion').value;
-  CONFIG.code = document.getElementById('f-code').value.trim() || 'BESTFRIEND';
+  CONFIG.code = document.getElementById('f-code').value.trim().toLowerCase() || 'bestfriend';
   CONFIG.hint = document.getElementById('f-hint').value;
   CONFIG.targetDate = document.getElementById('f-targetdate').value;
   CONFIG.name = document.getElementById('f-name').value.trim() || 'Friend';
   CONFIG.message = document.getElementById('f-message').value;
+
+  CONFIG.trivia.question = document.getElementById('f-trivia-q').value.trim();
+  CONFIG.trivia.options[0] = document.getElementById('f-trivia-opt0').value.trim();
+  CONFIG.trivia.options[1] = document.getElementById('f-trivia-opt1').value.trim();
+  CONFIG.trivia.options[2] = document.getElementById('f-trivia-opt2').value.trim();
+  CONFIG.trivia.correctIndex = Number(document.getElementById('f-trivia-correct').value);
+
   CONFIG.scratchMessage = document.getElementById('f-scratch').value.trim();
+
+  if(!CONFIG.easterEgg) CONFIG.easterEgg = {};
+  CONFIG.easterEgg.word = document.getElementById('f-easteregg-word').value.trim().toLowerCase() || 'magic';
+  CONFIG.easterEgg.message = document.getElementById('f-easteregg-msg').value.trim();
 }
 
 function previewAsFriend(){
@@ -845,12 +1372,13 @@ function previewAsFriend(){
   CONFIG.isSample = false;
   applyThemeAndOccasion();
   renderCollage();
+  setupTriviaGame();
+  setupLetterButton();
   closeEditor();
   document.getElementById('screen-picker').classList.remove('active');
   document.getElementById('screen-lock').classList.add('active');
   document.getElementById('screen-celebration').classList.remove('active');
   buildFlower();
-  initScratchCard();
   burstConfetti(60);
   document.getElementById('editor-status').textContent = '';
 }
@@ -897,7 +1425,7 @@ function downloadFinishedSite(){
   a.remove();
   URL.revokeObjectURL(url);
 
-  document.getElementById('editor-status').textContent = '✓ Downloaded successfully with the updated time-left message!';
+  document.getElementById('editor-status').textContent = '✓ Downloaded successfully with Easter egg configuration!';
 }
 
 if (!CONFIG.isSample) {
@@ -908,4 +1436,3 @@ if (!CONFIG.isSample) {
 </script>
 </body>
 </html>
-
