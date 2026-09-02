@@ -16,30 +16,26 @@ After enetering the password, u will be able to see a sample and can click the t
 
 New features:
 
-U can now add 6 pics and write a custom sweet message, and u can even change the password, but don't forget to give ur friend /love one hint to the password so he/she will be able to open it
+Four Card Types:  Birthday, Anniversary, Ask Out, and Love Notes.
 
-We tried to make it look better by adding floating petals in the background 
+Unlocking: unlock the gift with a password (default is bestfriend 
+or I LOVE U) u can type the word or click on the mic button and speak the word out u can even change the word to a phrase so u can make ur frined say something to open his/her gift
 
-And there is new confetti that blasts when u enter the password. In the end, there is a special surprise ur friend can blow out the candles and make a wish 
+Timed Delivery: Set a countdown timer so the recipient can't open the surprise until the actual special occasion arrives
 
-Now u can upload a video that plays at the start, and then the card opens so u can make ur freind/loved one more special 
+Memories: U can add  6 custom photos, record or upload a voice message, attach an opening video intro, or drop in a funny meme to prank them or u can add a handwritten letter so they can read it
 
-And there is the new timer feature so u can make the gift beforehand and send it to ur freind / Loved one and he/she will be able to open it only after the timer runs out
+U can even make them type some word like a special word, anywhere on the page just open the page and type the word ***magic***, and u can get a easter egg gift 
 
-U can also add a scratch-off card that the person can scratch with their mouse and under there u can write a sweet message for that person or add that person's fav meme
-
-
- This will be a sweet and memorable digital gift, and unlike physical gifts that can break or get lost ur friend can save this in their phone and cherish the good moments
-
-
+U can make a short quiz for them to unlock a scratch off message
  Plans: I am thining abt some new features, but i will make those ideas better and add them later
 
 
-AI usage (the imp part): I used AI for the falling petal animation background, blooming flower and was used to make the scratch off; hope u don't mind and i will try to make my own version for the next ship!!
+AI usage (the imp part): I used AI for the falling petal animation background and for the voice open of the gift  hope u don't mind and i will try to make my own version for the next ship!!
 
 
 
-<img width="361" height="459" alt="image" src="https://github.com/user-attachments/assets/af51b740-6ff2-42df-bf45-59c9fea79d7b" />
+<img width="477" height="470" alt="image" src="https://github.com/user-attachments/assets/2839d759-ca1f-4486-9a92-0d77debf4ad6" />
 
 <img width="374" height="206" alt="image" src="https://github.com/user-attachments/assets/5aeab715-c9cf-4dad-8c75-9d1f4b60052e" />
 
